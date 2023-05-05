@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store User Details to Local Storage</title>
+</head>
+<body>
+    <script>
+        let myobj={
+            name:"Himanshu",
+            age:25,
+        }
+        let myobj2={
+            name:"Sudhanshu",
+            age:32,
+        }
+        let myobj_serailized=JSON.stringify(myobj);
+        localStorage.setItem('myobj',myobj_serailized);
+        let myobj_serailized2=JSON.stringify(myobj2);
+        localStorage.setItem('myobj2',myobj_serailized2);
+        console.log(localStorage);
+    </script>
+</body>
+</html>
