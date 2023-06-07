@@ -1,0 +1,53 @@
+
+<head>
+    <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+      <header class="main-header">
+        <h1>Booking Appointment App</h1>
+      </header>
+            <main>
+                <% if (form.length > 0) { %>
+                  <form action="/admin/add-user" method="POST" class="booking-form" id="my-form">
+                    <div class="form-control">
+                      <label for="name">Name:</label>
+                      <input type="text" name="name" id="name">
+                    </div>
+                    <div class="form-control">
+                      <label for="email">Email:</label>
+                      <input type="text"  name="email" id="email">
+                    </div>
+                    <div class="form-control">
+                      <label for="number">Phone Number:</label>
+                      <input type="number"  name="number" id="number">
+                    </div>
+                    <button type="submit">
+                      Submit
+                    </button>
+                  </form>
+                  <ul id="users">
+                    <% for (let booking of form) { %>
+                        <li><%= booking.name %>--<%= booking.number %>--<%= booking.email %>
+                          <a href="/" class="buttonD">Delete  </a>
+                          <a href="/" class="buttonE"> Edit</a></li>
+                      <% } %>
+                  </ul>
+                  <% } else { %>
+                      <form action="/admin/add-user" method="POST" class="booking-form" id="my-form">
+                        <div class="form-control">
+                          <label for="myname">Name:</label>
+                          <input type="text" name="myname" id="myname">
+                        </div>
+                        <div class="form-control">
+                          <label for="mynumber">Phone Number:</label>
+                          <input type="number"  name="mynumber" id="mynumber">
+                        </div>
+                        <div class="form-control">
+                          <label for="myemail">Email:</label>
+                          <input type="text"  name="myemail" id="myemail">
+                        </div>
+                        <button type="submit">Submit</button>
+                      </form>
+                        <% } %>
+            </main>
