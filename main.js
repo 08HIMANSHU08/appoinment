@@ -1,44 +1,40 @@
+const path = require('path');
 
-// Put DOM elements into variables
-const myForm = document.querySelector('#my-form');
-const nameInput = document.querySelector('#name');
-const emailInput = document.querySelector('#email');
-const msg = document.querySelector('.msg');
-const userList = document.querySelector('#users');
+const express = require('express');
 
-// Listen for form submit
-myForm.addEventListener('submit', onSubmit);
+const bodyParser = require('body-parser');
 
-function onSubmit(e) {
-  e.preventDefault();
-  
-  if(nameInput.value === '' || emailInput.value === '') {
-    // alert('Please enter all fields');
-    msg.classList.add('error');
-    msg.innerHTML = 'Please enter all fields';
+const errorController = require('./controllers/error');
 
-    // Remove error after 3 seconds
-    setTimeout(() => msg.remove(), 3000);
-  } else {
-    // Create new list item with user
-    const li = document.createElement('li');
+const sequelize=require('./util/database');
 
-    // Add text node with input values
-    li.appendChild(document.createTextNode(`${nameInput.value}: ${emailInput.value}`));
-    // Local Storage
-    localStorage.setItem(nameInput.value,nameInput.value+" "+emailInput.value)
+var cors = require('cors');
 
-    // Session Storage
-    sessionStorage.setItem(nameInput.value,nameInput.value+" "+emailInput.value)
+const adminRoutes = require('./routes/admin');
 
-    //document cookie
-    document.cookie=nameInput.value+'='+nameInput.value+" "+emailInput.value;
+const app = express();
 
-    // Append to ul
-    userList.appendChild(li);
+app.use(cors());
 
-    // Clear fields
-    nameInput.value = '';
-    emailInput.value = '';
-  }
-}
+
+app.set('view engine','ejs')
+app.set('views','views')
+
+
+app.use(bodyParser.json({extended:false}));
+
+app.use(express.static(path.join(__dirname,'public')));
+
+app.use('/user',adminRoutes)
+
+
+
+app.use(errorController.get404)
+
+sequelize.sync()
+.then(result=>{
+    app.listen(3000)
+})
+.catch(err=>{console.log(err)});
+
+
